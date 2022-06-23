@@ -15,15 +15,18 @@
   //浅拷贝
   let arr = [3, 4, 5]
   let obj = { a: 1, b: 2 }
+  let src = [1, 2, [3, 4]]
   let arr1 = shadowCopy(arr)
   let arr2 = shadowCopy2(arr)
   const shadowCopy3 = arr => arr.map(v => v) //箭头函数的浅拷贝
   let arr3 = shadowCopy3(arr)
   let arr4 = shadowCopy4(obj)
+  let arr5 = deepCopy(src)
   console.log(arr1)
   console.log(arr2)
   console.log(arr3)
   console.log(arr4)
+  console.log(arr5)
   //循环数组的浅拷贝(只拷贝一层，也就是拷贝A对象里面的数据,但是不拷贝A对象里面的子对象)
   function shadowCopy(arr) {
     let result = []
@@ -44,6 +47,21 @@
     return result
   }
   //浅拷贝有一个问题，就是如果数组是[1,2,[3,4]]这种拷贝，嵌套的数组会把引用地址拷贝过来，换句话说就是复制了一份一摸一样的数据
+  /**
+   * 递归
+  */
+  function deepCopy(src) {
+    let result = Array.isArray(src) ? [] : {}
+    for (let key in src) {
+      if (typeof src[key] === 'object' && src[key] !== null) {
+        result[key] = deepCopy(src[key])
+      } else {
+        result[key] = src[key]
+      }
+
+    }
+    return result
+  }
 
 </script>
 
