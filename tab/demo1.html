@@ -1,0 +1,101 @@
+<!--tab选项卡-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tab选项卡</title>
+</head>
+<style>
+  .container {
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+
+  .tabs .tab-header {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    line-height: 2;
+    font-weight: 500;
+  }
+
+  .tabs .tab-item {
+    margin-right: 30px;
+    margin-bottom: -2px;
+    cursor: pointer;
+  }
+
+  .tab-content {
+    padding-top: 20px
+  }
+
+  .tabs .tab-item.active {
+    color: lightblue;
+    border-bottom: 2px solid lightblue;
+  }
+
+  .tabs .tab-panel.active {
+    display: block;
+  }
+
+  .tabs .tab-panel {
+    padding: 15px 0;
+    font-size: 14px;
+    display: none;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <h2>tab选项卡</h2>
+    <div class="tabs">
+      <div class="tab-header">
+        <div class="tab-item active">用户管理</div>
+        <div class="tab-item ">配置管理</div>
+        <div class="tab-item ">角色管理</div>
+        <div class="tab-item">定时任务补偿</div>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  class Tabs {
+    constructor($root) {
+      this.$root = $root
+      this.$$tabitem = $root.querySelectorAll('.tab-item');
+      this.$$tabpanel = $root.querySelectorAll('.tab-panel')
+      this.bind()
+    }
+    bind() {
+      let self = this
+      //遍历items
+      this.$$tabitem.forEach($tab => {
+        //增加点击事件
+        $tab.onclick = function () {
+          //点击tab-item后，添加或者删除active,先把元素本身的active删掉
+          self.$$tabitem.forEach($tab => $tab.classList.remove('active'))
+          //再把active加上
+          this.classList.add('active')
+          //点击tab-item的同时，要换掉tab-panel，所以要知道点击的是哪个tab
+          let index = [...self.$$tabitem].indexOf(this)
+          //console.log(index)
+          self.$$tabpanel.forEach($panel => $panel.classList.remove('active'))
+          self.$$tabpanel[index].classList.add('active')
+        }
+      })
+    }
+  }
+  new Tabs(document.querySelector('.tabs'))
+</script>
+
+</html>
