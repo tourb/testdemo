@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1591966_u346be35l6.css">
+  <title>JS Bin</title>
+</head>
+<style>
+  .box button {
+    font-size: 20px;
+    font-weight: 400;
+    padding: 10px 16px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #303030;
+    background-color: #f0f0f0;
+  }
+
+  .box {
+    max-width: 800px;
+    margin: 30px auto;
+    border-radius: 4px;
+    box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.3);
+    padding: 16px;
+  }
+
+  .message {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50px);
+    padding: 10px 16px;
+    background: #67c23a;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all .3s;
+  }
+
+  .message.show {
+    transform: translate(-50%, 10px);
+    opacity: 1;
+  }
+
+  .message.success {
+    background-color: #67c23a;
+  }
+
+  .message.warning {
+    background-color: #c59613;
+  }
+
+  .message.info {
+    background-color: #aeb4ab;
+  }
+
+  .message.danger {
+    background-color: #e6370b;
+  }
+</style>
+
+<body>
+  <div class="box">
+    <h2>message组件</h2>
+    <div class="btn-group">
+      <button id='tip0' class="button">成功</button>
+      <button id='tip1' class="button">警告</button>
+      <button id='tip2' class="button">消息</button>
+      <button id='tip3' class="button">错误</button>
+    </div>
+
+  </div>
+
+</body>
+<script>
+  class tap {
+    constructor({ type = 'success', text = 'iam tip' }) {
+      this.type = type
+      this.text = text
+      this.render()
+      this.bind()
+    }
+    render() {
+      let $div = document.createElement('div')
+      this.$message = $div
+      $div.classList.add('message')
+      $div.classList.add(this.type)
+      let $icon = document.createElement('span')
+      $icon.classList.add('iconfont')
+      $icon.classList.add('icon-' + this.type)
+      $div.appendChild($icon)
+      let $text = document.createTextNode(this.text)
+      $div.appendChild($text)
+      document.body.appendChild($div)
+    }
+    bind() {
+      setTimeout(() => this.show());
+      setTimeout(() => this.destory(), 3000)
+    }
+    show() {
+      this.$message.classList.add('show')
+    }
+    destory() {
+      this.$message.classList.remove('show')
+      setTimeout(() => {
+        this.$message.parentNode.removeChild(this.$message)
+      }, 300);
+
+    }
+  }
+
+
+  document.querySelector('#tip0').onclick = function () {
+    new tap({ type: 'success', text: 'im tips0!' })
+  }
+  document.querySelector('#tip1').onclick = function () {
+    new tap({ type: 'warning', text: 'im tips1!' })
+  }
+  document.querySelector('#tip2').onclick = function () {
+    new tap({ type: 'info', text: 'im tips2!' })
+  }
+  document.querySelector('#tip3').onclick = function () {
+    new tap({ type: 'danger', text: 'im tips3!' })
+  }
+
+</script>
+
+</html>
