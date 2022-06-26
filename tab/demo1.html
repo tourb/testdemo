@@ -17,6 +17,7 @@
   }
 
   .tabs .tab-header {
+    position: relative;
     display: flex;
     border-bottom: 2px solid #ddd;
     line-height: 2;
@@ -34,7 +35,7 @@
   }
 
   .tabs .tab-item.active {
-    color: lightblue;
+    color: rgb(142, 156, 160);
     border-bottom: 2px solid lightblue;
   }
 
@@ -47,6 +48,16 @@
     font-size: 14px;
     display: none;
   }
+
+  .tabs .line {
+    top: 100%;
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    transform: translateX(0);
+    transition: all .3s;
+    background: rgb(51, 131, 153);
+  }
 </style>
 
 <body>
@@ -58,6 +69,25 @@
         <div class="tab-item ">配置管理</div>
         <div class="tab-item ">角色管理</div>
         <div class="tab-item">定时任务补偿</div>
+        <span class="line"></span>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>tab选项卡</h2>
+    <div class="tabs">
+      <div class="tab-header">
+        <div class="tab-item active">用户管理</div>
+        <div class="tab-item ">配置管理</div>
+        <div class="tab-item ">角色管理</div>
+        <div class="tab-item">定时任务补偿</div>
+        <span class="line"></span>
       </div>
       <div class="tab-content">
         <div class="tab-panel active">用户管理</div>
@@ -73,9 +103,15 @@
     constructor($root) {
       this.$root = $root
       this.$$tabitem = $root.querySelectorAll('.tab-item');
-      this.$$tabpanel = $root.querySelectorAll('.tab-panel')
+      this.$$tabpanel = $root.querySelectorAll('.tab-panel');
+      this.$line = $root.querySelector('.line')
       this.bind()
+      this.init()
     }
+    init() {
+      this.$line.style.Width = this.$$tabitem[0].offsetWidth + 'px'
+    }
+
     bind() {
       let self = this
       //遍历items
@@ -86,6 +122,11 @@
           self.$$tabitem.forEach($tab => $tab.classList.remove('active'))
           //再把active加上
           this.classList.add('active')
+          //获取导航条line的宽度
+          //console.log(this.offsetWidth)
+          //console.log(this.offsetLeft)
+          self.$line.style.width = this.offsetWidth + 'px'
+          self.$line.style.transform = `translateX(${this.offsetLeft}px)`
           //点击tab-item的同时，要换掉tab-panel，所以要知道点击的是哪个tab
           let index = [...self.$$tabitem].indexOf(this)
           //console.log(index)
@@ -95,7 +136,7 @@
       })
     }
   }
-  new Tabs(document.querySelector('.tabs'))
+  document.querySelectorAll('.tabs').forEach($container => new Tabs($container))
 </script>
 
 </html>
