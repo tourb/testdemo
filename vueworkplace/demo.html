@@ -10,16 +10,35 @@
 
 <body>
   <div id="app">
-    {{ date }}
+    {{ date | formData }}
+    <span>{{apple}}</span>
+    <div v-text="apple"></div>
   </div>
+
 </body>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script>
+  let plusDate = function (value) {
+    return value < 10 ? '0' + value : value
+  }
   var app = new Vue({
     el: '#app',
     data: {
-      date: new Date()
+      date: new Date(),
+      apple: '苹果'
+    },
+    filters: {
+      formData: function (value) {
+        let data = new Date(value)
+        let year = data.getFullYear()
+        let month = plusDate(data.getMonth() + 1)
+        let day = plusDate(data.getDate())
+        let hour = plusDate(data.getHours())
+        let minute = plusDate(data.getMinutes())
+        let second = plusDate(data.getSeconds())
+        return year + '年' + month + '月' + day + '日' + hour + ':' + minute + ':' + second
+      }
     },
     mounted() {
       self = this

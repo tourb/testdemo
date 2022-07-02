@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  [v-cloak] {
+    display: none;
+  }
+
+  .radioBox {
+    width: 200px;
+    height: 100px;
+    background: rgb(4, 3, 5);
+    color: rgb(255, 255, 255);
+  }
+
+  .radiobox {
+    width: 200px;
+    height: 100px;
+    background: rgb(127, 85, 168);
+    color: rgb(255, 255, 255);
+  }
+</style>
+
+<body>
+  <div id="app">
+
+    <div v-if="type === 'name'">
+      a<input type="text" key='name'>
+    </div>
+    <div v-else>
+      b<input type="text" key='password'>
+    </div>
+    <button @click='count()'>on</button>
+    <ul v-for='(value,key,index) in name'>
+      <li>{{value}}--{{index}}--{{key}}</li>
+    </ul>
+    <p>点我每次加1</p>
+    <p>{{sum1}}</p>
+    <button @click='sum()'>+1</button>
+    <button @click='sum(7)'>+7</button>
+    <input type="text" v-model="value">
+    {{value}}
+    <br>
+    <input type="radio" :checked="yes">
+    <div class="radioBox">
+      1<input type="radio" :checked="yes" value="1" v-model="chek">
+      2<input type="radio" :checked="yes" value="2" v-model="chek">
+      3<input type="radio" :checked="yes" value="3" v-model="chek">
+      4<input type="radio" :checked="yes" value="4" v-model="chek">
+      5<input type="radio" :checked="yes" value="5" v-model="chek">
+      <br>
+      现在选中的是{{chek}}
+    </div>
+    <div class="radiobox">
+      <input type="checkbox" value="1" name=" " id="" v-model="chek3">
+      <input type="checkbox" value="2" name="" id="" v-model="chek3">
+      <input type="checkbox" value="3" name="" id="" v-model="chek3">
+      现在选中的是{{chek3}}
+    </div>
+  </div>
+</body>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      mas: 'ssdfsdfsdf',
+      type: 'name',
+      name: {
+        name1: '1',
+        name2: '2',
+        value: ''
+      },
+      sum1: 0,
+      value: '',
+      yes: true,
+      chek: '3',
+      yes2: true,
+      chek3: []
+
+    },
+    methods: {
+      count: function () {
+        console.log('23')
+        this.type = (this.type === 'name' ? 'password' : 'name')
+      },
+      sum: function (a) {
+        a = a || 1
+        this.sum1 = this.sum1 + a
+        return this.sum1
+      }
+    },
+
+  })
+</script>
+
+</html>

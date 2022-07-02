@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div>我是父组件</div>
+    <child-component :msg='[3,6,9]'></child-component>
+
+    <t-bind :msg2='msg1'></t-bind>
+    我是父组件 <input type="text" v-model="msg1">
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      dfdf: '1232342',
+      msg1: 'sdkfjsdlkfjs'
+    },
+    components: {
+      'child-component': {
+        props: ['msg'],
+        template: '<div>{{msg}}</div>',
+        data() {
+          return {
+
+          }
+        },
+      },
+      't-bind': {
+        props: ['msg2'],
+        template: '<div style="color:red">我是子组件：{{msg2}}</div>',
+        data() {
+          return {
+          }
+        }
+      }
+    }
+  })
+</script>
+
+</html>

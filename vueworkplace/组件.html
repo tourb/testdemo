@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <my-component></my-component>
+    <my-c></my-c>
+    <table>
+      <tbody is="my-c"></tbody>
+    </table>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+  //注册组件
+  Vue.component('my-component', {
+    template: '<div style="color:red">我是一个组件</div>'
+  })
+  var app = new Vue({
+    el: '#app',
+    data: {
+
+    },
+    components: {
+      'my-c': {
+        template: '<button @click="count++">{{count}}</button>',
+        data: function () {
+          return {
+            count: 0
+          }
+        }
+      }
+    }
+  })
+</script>
+
+</html>
